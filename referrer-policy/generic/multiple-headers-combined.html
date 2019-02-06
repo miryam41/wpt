@@ -6,6 +6,7 @@
     <script src="/resources/testharnessreport.js"></script>
 
     <script src="/referrer-policy/generic/common.js"></script>
+    <script src="/referrer-policy/generic/referrer-policy-test-case.js"></script>
   </head>
   <body>
     <h1>Referrer Policy: multiple Referrer-Policy header values are allowed</h1>
@@ -18,10 +19,10 @@
       var urlPath = '/referrer-policy/generic/subresource/image.py?cache_destroyer=' + (new Date()).getTime();
       var url = location.protocol + "//www1." + location.hostname + ":" + location.port +
                 urlPath;
-      queryImage(url, test.step_func(function(message) {
+      requestViaImageForReferrerPolicy(url).then(test.step_func(function(message) {
         assert_equals(message.referrer, document.location.origin + "/");
         test.done();
-      }), null, 'no-referrer', test);
+      }), null, 'no-referrer');
     </script>
 
     <div id="log"></div>

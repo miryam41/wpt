@@ -38,12 +38,14 @@ function runSvgTests(testProperties, testDescription, testFunction) {
     let check_url = url_prefix + "svg.py" + "?id=" + current.id +
                     "&report-headers";
     current.test.step_timeout(function() {
-      queryXhr(check_url, function(message) {
+      requestViaFetch(check_url)
+        .then(current.test.step_func(message => {
           assert_own_property(message, "headers");
           assert_own_property(message, "referrer");
           assert_equals(message.referrer, current.expected);
           current.test.done();
-      }, null, null, current.test);
+        }))
+        .catch(() => current.test.unreached_func()());
     }, 800);
   };
 
